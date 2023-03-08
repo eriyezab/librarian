@@ -22,8 +22,11 @@ def find_epub(title: str):
     return results
 
 def download_epub(url):
-    response = requests.get(url)
-    filename = res.headers.get('Content-Disposition').split('"')[1]
+    try:
+        response = requests.get(url)
+    except:
+        return ''
+    filename = response.headers.get('Content-Disposition').split('"')[1]
     if response.status_code == 200:
         with open(f"downloads/{filename}.epub", "wb") as f:
             f.write(response.content)
